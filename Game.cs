@@ -44,12 +44,9 @@ namespace GraphicsLab4
 
          ResetCameraPosition();
 
-         figure = new Figure();
-         figure.InitFigure("../../figure.txt");
-
-         figure.ReadTexture("../../BigFloppa.png");
-         figure.BindTexture();
-         figure.CalcTextureCoords();
+         figure = new Cylinder();
+         figure.InitFigure("../../cylinders.txt");
+         figure.BuildMesh();
 
          base.OnLoad(e);
       }
@@ -82,39 +79,23 @@ namespace GraphicsLab4
       {
          GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-         //if(isOrthographic)
-         //{
-         //   Matrix4 modelview = Matrix4.CreateOrthographicOffCenter(1f, -1f, -1f, 1f, -10f, 10f);
-         //   GL.MatrixMode(MatrixMode.Modelview);
-         //   GL.LoadMatrix(ref modelview);
-         //   GL.Rotate(180, 0, 1f, 0);
-         //   GL.Translate(0, 0, -11);
+         Matrix4 modelview = Matrix4.LookAt(cameraShift + cameraPosition, cameraShift + Vector3.Zero, Vector3.UnitY);
+         GL.MatrixMode(MatrixMode.Modelview);
+         GL.LoadMatrix(ref modelview);
 
-         //   GL.Translate(cameraShift + cameraPosition);
-         //   GL.Scale(0.5f, 0.5f, 0.5f);
-
-         //   //GL.Translate(cameraShift + cameraPosition);
-         //}
-         //else
-         {
-            Matrix4 modelview = Matrix4.LookAt(cameraShift + cameraPosition, cameraShift + Vector3.Zero, Vector3.UnitY);
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadMatrix(ref modelview);
-         }
-
-         GL.Enable(EnableCap.Lighting);
-         GL.Enable(EnableCap.Light0);
+         //GL.Enable(EnableCap.Lighting);
+         // GL.Enable(EnableCap.Light0);
 
 
-         float[] lightPos = { 2, 0, 1, 1 };
-         float[] material = { 0, 0, 0.9f, 1 };
+         //float[] lightPos = { 2, 0, 1, 1 };
+         //float[] material = { 0, 0, 0.9f, 1 };
 
 
-         GL.LightModel(LightModelParameter.LightModelTwoSide, 1);
-         GL.Light(LightName.Light0, LightParameter.Position, lightPos);
-
-         GL.Material(MaterialFace.Front, MaterialParameter.AmbientAndDiffuse, material);
-         GL.Enable(EnableCap.ColorMaterial);
+         //GL.LightModel(LightModelParameter.LightModelTwoSide, 1);
+         //GL.Light(LightName.Light0, LightParameter.Position, lightPos);
+         //
+         //GL.Material(MaterialFace.Front, MaterialParameter.AmbientAndDiffuse, material);
+         //GL.Enable(EnableCap.ColorMaterial);
 
          //figure.DrawTexture();
          GL.Color3(1f, 0f, 0f);
@@ -127,7 +108,7 @@ namespace GraphicsLab4
             figure.DrawGrid();
          }
 
-         DrawCube(new Vector3(lightPos[0], lightPos[1], lightPos[2]), 0.5f);
+         //DrawCube(new Vector3(lightPos[0], lightPos[1], lightPos[2]), 0.5f);
 
          SwapBuffers();
       }
